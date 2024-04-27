@@ -24,6 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+## BaiduMapKit
+
+Copyright (c) 2015 BaiduLBS
+
 ## HandyJSON
 
    Copyright 1999-2016  Alibaba Group Holding Ltd.

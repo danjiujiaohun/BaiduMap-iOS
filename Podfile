@@ -1,3 +1,6 @@
+# 依赖库文件仓库链接
+source 'https://github.com/CocoaPods/Specs.git'
+
 platform :ios, '12.0'
 use_frameworks!
 
@@ -20,6 +23,7 @@ target 'BaiduMap' do
     pod 'MJRefresh'
     pod 'HandyJSON'
     pod 'RTRootNavigationController'
+    pod 'BaiduMapKit', '~> 6.0.0'
 
 
 #   OC混编第三方库

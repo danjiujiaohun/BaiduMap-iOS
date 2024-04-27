@@ -43,6 +43,16 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright (c) 2015 BaiduLBS</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>BaiduMapKit</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>   Copyright 1999-2016  Alibaba Group Holding Ltd.
 
    Licensed under the Apache License, Version 2.0 (the "License");

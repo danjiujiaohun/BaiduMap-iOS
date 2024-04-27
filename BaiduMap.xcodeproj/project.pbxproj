@@ -132,6 +132,7 @@
 				E1E95FCC2BD794BB00CEE618 /* Frameworks */,
 				E1E95FCD2BD794BB00CEE618 /* Resources */,
 				38F17DDD72A3419541723BC5 /* [CP] Embed Pods Frameworks */,
+				37C006CCCF3386A4C42341D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -189,6 +190,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		37C006CCCF3386A4C42341D4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BaiduMap/Pods-BaiduMap-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BaiduMap/Pods-BaiduMap-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BaiduMap/Pods-BaiduMap-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		38F17DDD72A3419541723BC5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
