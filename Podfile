@@ -23,7 +23,7 @@ target 'BaiduMap' do
     pod 'MJRefresh'
     pod 'HandyJSON'
     pod 'RTRootNavigationController'
-    pod 'BaiduMapKit', '~> 6.0.0'
+    pod 'BaiduMapKit'
 
 
 #   OC混编第三方库
