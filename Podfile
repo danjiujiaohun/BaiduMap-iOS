@@ -24,7 +24,7 @@ target 'BaiduMap' do
     pod 'HandyJSON'
     pod 'RTRootNavigationController'
     pod 'BaiduMapKit'
-
+    pod 'BMKLocationKit-Swift'
 
 #   OC混编第三方库
     # pod 'MJRefresh'
