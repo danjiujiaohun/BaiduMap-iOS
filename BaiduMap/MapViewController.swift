@@ -23,6 +23,12 @@ class MapViewController: BaseViewController,
     /// BMKLocationManager实例
     private var locationManager: BMKLocationManager!
     
+    /// 中间的定位指针
+    private var annotation: BMKPointAnnotation!
+    
+    /// 中心点标识
+    private var centerAnnotationViewIdentifier = "com.map.center.annotation"
+    
     /// 当前的中心经度
     var currentLongitude: Double?
     
@@ -57,6 +63,7 @@ class MapViewController: BaseViewController,
 
         configurationBMK()
         initView()
+        createCenterAnnotation()
         
         locationManager.startUpdatingHeading()
         locationManager.startUpdatingLocation()
@@ -142,6 +149,19 @@ class MapViewController: BaseViewController,
         }
     }
     
+    private func createCenterAnnotation() {
+        if annotation == nil {
+            annotation = MapCenterAnnotation.init()
+        }
+        
+        annotation.isLockedToScreen = true
+        annotation.screenPointToLock = CGPoint(x: view.frame.width/2, y: (view.frame.height-Common.safeAreaBottom)/2)
+        
+        if let annotation = annotation {
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
     /// 地图中心移动到用户所在位置
     public func moveToUserLocation(){
         if userLocation.location != nil{
@@ -149,6 +169,11 @@ class MapViewController: BaseViewController,
         } else {
             startLocation()
         }
+    }
+    
+    /// 暴露的方法-定位成功
+    func locationSuccess() {
+        
     }
     
     /// 暴露的方法-开始定位
@@ -199,6 +224,8 @@ class MapViewController: BaseViewController,
             
             locationName = pt.name
             locationAddress = pt.addr
+            
+            self.locationSuccess()
         }
         
     }
@@ -211,6 +238,24 @@ class MapViewController: BaseViewController,
             print("暂无定位权限")
             
         }
+    }
+    
+    // MARK: - BMKMapViewDelegate
+    func mapView(_ mapView: BMKMapView, viewFor annotation: BMKAnnotation) -> BMKAnnotationView? {
+        if annotation.isKind(of: MapCenterAnnotation.self) {
+            /// 中心点标注
+            var annotationView: MapCenterAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: centerAnnotationViewIdentifier) as? MapCenterAnnotationView
+            
+            if annotationView == nil {
+                annotationView = MapCenterAnnotationView.init(annotation: annotation, reuseIdentifier: centerAnnotationViewIdentifier)
+            }
+            
+            annotationView?.centerOffset = CGPoint(x: 0, y: 1.fit())
+            
+            return annotationView
+        }
+        
+        return nil
     }
 
 }

@@ -18,6 +18,7 @@
 		E19F48552BD7A38B00754E38 /* BundleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F48512BD7A38B00754E38 /* BundleExt.swift */; };
 		E19F48562BD7A38B00754E38 /* AdapterExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F48522BD7A38B00754E38 /* AdapterExt.swift */; };
 		E19F485C2BD7A6E800754E38 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F485B2BD7A6E800754E38 /* MapViewController.swift */; };
+		E1C775EC2BEA041300C9919D /* MapCenterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */; };
 		E1E95FD32BD794BB00CEE618 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E95FD22BD794BB00CEE618 /* AppDelegate.swift */; };
 		E1E95FDA2BD794BB00CEE618 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1E95FD82BD794BB00CEE618 /* Main.storyboard */; };
 		E1E95FDC2BD794BD00CEE618 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E95FDB2BD794BD00CEE618 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		E19F48512BD7A38B00754E38 /* BundleExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleExt.swift; sourceTree = "<group>"; };
 		E19F48522BD7A38B00754E38 /* AdapterExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterExt.swift; sourceTree = "<group>"; };
 		E19F485B2BD7A6E800754E38 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCenterAnnotationView.swift; sourceTree = "<group>"; };
 		E1E95FCF2BD794BB00CEE618 /* BaiduMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaiduMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E95FD22BD794BB00CEE618 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1E95FD92BD794BB00CEE618 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				E1E95FDB2BD794BD00CEE618 /* Assets.xcassets */,
 				E1E95FDD2BD794BD00CEE618 /* LaunchScreen.storyboard */,
 				E1E95FE02BD794BD00CEE618 /* Info.plist */,
+				E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */,
 			);
 			path = BaiduMap;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				E19F48262BD7983B00754E38 /* UIImage.swift in Sources */,
 				E19F48532BD7A38B00754E38 /* UILabelExt.swift in Sources */,
 				E19F48562BD7A38B00754E38 /* AdapterExt.swift in Sources */,
+				E1C775EC2BEA041300C9919D /* MapCenterAnnotationView.swift in Sources */,
 				E1E95FD32BD794BB00CEE618 /* AppDelegate.swift in Sources */,
 				E19F48272BD7983B00754E38 /* UIColor.swift in Sources */,
 			);
