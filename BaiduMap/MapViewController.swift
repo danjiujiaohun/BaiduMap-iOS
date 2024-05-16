@@ -15,19 +15,33 @@ class MapViewController: BaseViewController,
                           BMKMapViewDelegate,
                           BMKLocationAuthDelegate,
                           BMKGeneralDelegate,
-                          BMKLocationManagerDelegate {
+                          BMKLocationManagerDelegate,
+                          BMKGeoCodeSearchDelegate {
     private(set) var mapView: BMKMapView!
     
     /// BMKUserLocation实例
     private var userLocation: BMKUserLocation!
+    
     /// BMKLocationManager实例
     private var locationManager: BMKLocationManager!
+    
+    /// 逆地理编码检索实例
+    private var search: BMKGeoCodeSearch!
+    
+    /// 逆地理编码检索选项
+    private var reverseGeoCodeOption: BMKReverseGeoCodeSearchOption!
     
     /// 中间的定位指针
     private var annotation: BMKPointAnnotation!
     
     /// 中心点标识
     private var centerAnnotationViewIdentifier = "com.map.center.annotation"
+    
+    /// 当前用户定位的经度
+    var currentUserLongitude: Double?
+    
+    /// 当前用户定位的纬度
+    var currentUserLatitude: Double?
     
     /// 当前的中心经度
     var currentLongitude: Double?
@@ -41,9 +55,13 @@ class MapViewController: BaseViewController,
     /// 城市编码
     var cityCode: String?
     
+    /// 定位地点名称
     var locationName: String?
     
     var locationAddress: String?
+    
+    // 当前定位的poiName
+    var poiName = ""
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -75,6 +93,8 @@ class MapViewController: BaseViewController,
         BMKLocationAuth.sharedInstance()?.checkPermision(withKey: appKey, authDelegate: self)
         
         DispatchQueue.global(qos: .background).async {
+            // 设置为YES时才能创建BMKSearchBase及其子类对象，否则返回nil，将影响地图SDK所有检索组件功能的使用
+            BMKMapManager.setAgreePrivacy(true)
             // 要使用百度地图，请先启动BMKMapManager
             let mapManager = BMKMapManager()
             // 启动引擎并设置AK并设置delegate
@@ -126,6 +146,13 @@ class MapViewController: BaseViewController,
         locationManager.reGeocodeTimeout = 10
         ///连续定位是否返回逆地理信息，默认YES。
         locationManager.locatingWithReGeocode = true
+        
+        search = BMKGeoCodeSearch()
+        search.delegate = self
+        
+        reverseGeoCodeOption = BMKReverseGeoCodeSearchOption()
+        /// 是否访问最新版行政区划数据（仅对中国数据生效
+        reverseGeoCodeOption.isLatestAdmin = true
     }
     
     private func initView() {
@@ -182,6 +209,16 @@ class MapViewController: BaseViewController,
         locationManager.startUpdatingLocation()
     }
     
+    /// 暴露的方法-地图有拖拽
+    func regionDidChange(latitude: Double, longitude: Double) {
+        
+    }
+    
+    /// 暴露方法-逆地理编码成功
+    func getReverseGeoResultSuccess() {
+        
+    }
+    
     // MARK: - BMKLocationManagerDelegate
     /**
      @brief 该方法为BMKLocationManager提供设备朝向的回调方法
@@ -216,8 +253,8 @@ class MapViewController: BaseViewController,
             mapView.updateLocationData(userLocation)
             mapView.setCenter(userLocation.location.coordinate, animated: true)
             
-            currentLatitude = l.coordinate.latitude
-            currentLongitude = l.coordinate.longitude
+            currentUserLatitude = l.coordinate.latitude
+            currentUserLongitude = l.coordinate.longitude
             
             cityName = city
             cityCode = adCode
@@ -258,4 +295,57 @@ class MapViewController: BaseViewController,
         return nil
     }
 
+    func mapView(_ mapView: BMKMapView, regionWillChangeAnimated animated: Bool) {
+        print("=====开始拖动地图")
+    }
+    
+    func mapView(_ mapView: BMKMapView, regionDidChangeAnimated animated: Bool) {
+        print("=====拖动了地图")
+        currentLatitude = mapView.centerCoordinate.latitude
+        currentLongitude = mapView.centerCoordinate.longitude
+        regionDidChange(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+        
+        /// 逆地理编码检索
+        reverseGeoCodeOption.location = CLLocationCoordinate2DMake(mapView.centerCoordinate.latitude, mapView.centerCoordinate.longitude)
+        search.reverseGeoCode(reverseGeoCodeOption)
+        
+        if search.reverseGeoCode(reverseGeoCodeOption) == true {
+            print("=======检索发送成功")
+            
+        } else {
+            print("=======检索发送失败")
+        }
+    }
+    
+    // MARK: - BMKGeoCodeSearchDelegate
+    
+    func onGetReverseGeoCodeResult(_ searcher: BMKGeoCodeSearch!, result: BMKReverseGeoCodeSearchResult!, errorCode error: BMKSearchErrorCode) {
+        if error == BMK_SEARCH_NO_ERROR {
+            print("=======")
+            print("=======城市：\(result.addressDetail.city)")
+            print("=======城市编码：\(result.addressDetail.adCode)")
+            print("=======地址：\(result.address)")
+            
+            cityName = result.addressDetail.city
+            cityCode = result.addressDetail.adCode
+            
+            if let region = result.poiRegions.first {
+                poiName = region.regionName
+                
+            } else if var list = result.poiList {
+                list.sort { item1, item2 in
+                    return item1.distance < item2.distance
+                }
+                poiName = list.first?.name ?? ""
+            }
+            
+            locationName = poiName
+            locationAddress = result.address
+            
+            getReverseGeoResultSuccess()
+            
+        } else {
+            print("=======检索失败")
+        }
+    }
 }
