@@ -37,4 +37,7 @@ public enum ColorName:String,CaseIterable {
     
     /// 0xFF453A 警告红色
     case color_FF453A
+    
+    ///  0xFF8100
+    case color_FF8100
 }

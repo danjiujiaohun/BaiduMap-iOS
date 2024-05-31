@@ -19,10 +19,13 @@
 		E19F48562BD7A38B00754E38 /* AdapterExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F48522BD7A38B00754E38 /* AdapterExt.swift */; };
 		E19F485C2BD7A6E800754E38 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F485B2BD7A6E800754E38 /* MapViewController.swift */; };
 		E1C775EC2BEA041300C9919D /* MapCenterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */; };
+		E1DC14952BF748D10075A175 /* ZULocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC14942BF748D10075A175 /* ZULocationModel.swift */; };
+		E1DC14982BF74DC40075A175 /* suggestionLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DC14972BF74DC40075A175 /* suggestionLocationCell.swift */; };
 		E1E95FD32BD794BB00CEE618 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E95FD22BD794BB00CEE618 /* AppDelegate.swift */; };
 		E1E95FDA2BD794BB00CEE618 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1E95FD82BD794BB00CEE618 /* Main.storyboard */; };
 		E1E95FDC2BD794BD00CEE618 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E95FDB2BD794BD00CEE618 /* Assets.xcassets */; };
 		E1E95FDF2BD794BD00CEE618 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1E95FDD2BD794BD00CEE618 /* LaunchScreen.storyboard */; };
+		E1F0BB132BF5E47E0052818C /* AddressSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0BB122BF5E47E0052818C /* AddressSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,12 +42,15 @@
 		E19F48522BD7A38B00754E38 /* AdapterExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterExt.swift; sourceTree = "<group>"; };
 		E19F485B2BD7A6E800754E38 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCenterAnnotationView.swift; sourceTree = "<group>"; };
+		E1DC14942BF748D10075A175 /* ZULocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZULocationModel.swift; sourceTree = "<group>"; };
+		E1DC14972BF74DC40075A175 /* suggestionLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = suggestionLocationCell.swift; sourceTree = "<group>"; };
 		E1E95FCF2BD794BB00CEE618 /* BaiduMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaiduMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E95FD22BD794BB00CEE618 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1E95FD92BD794BB00CEE618 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1E95FDB2BD794BD00CEE618 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1E95FDE2BD794BD00CEE618 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1E95FE02BD794BD00CEE618 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1F0BB122BF5E47E0052818C /* AddressSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchViewController.swift; sourceTree = "<group>"; };
 		F53A6E563622DF28D6A96EA9 /* Pods_BaiduMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaiduMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,6 +96,15 @@
 			path = BaseUnit;
 			sourceTree = "<group>";
 		};
+		E1DC14962BF74D820075A175 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */,
+				E1DC14972BF74DC40075A175 /* suggestionLocationCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E1E95FC62BD794BB00CEE618 = {
 			isa = PBXGroup;
 			children = (
@@ -116,12 +131,14 @@
 				E1E95FD22BD794BB00CEE618 /* AppDelegate.swift */,
 				E10BAEA62BE0FBE60088EAAC /* RootViewController.swift */,
 				E19F485B2BD7A6E800754E38 /* MapViewController.swift */,
+				E1F0BB122BF5E47E0052818C /* AddressSearchViewController.swift */,
+				E1DC14942BF748D10075A175 /* ZULocationModel.swift */,
+				E1DC14962BF74D820075A175 /* Views */,
 				E19F48422BD79A6100754E38 /* BaseUnit */,
 				E1E95FD82BD794BB00CEE618 /* Main.storyboard */,
 				E1E95FDB2BD794BD00CEE618 /* Assets.xcassets */,
 				E1E95FDD2BD794BD00CEE618 /* LaunchScreen.storyboard */,
 				E1E95FE02BD794BD00CEE618 /* Info.plist */,
-				E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */,
 			);
 			path = BaiduMap;
 			sourceTree = "<group>";
@@ -262,9 +279,12 @@
 				E19F485C2BD7A6E800754E38 /* MapViewController.swift in Sources */,
 				E19F48542BD7A38B00754E38 /* Common.swift in Sources */,
 				E19F48442BD79A8100754E38 /* BaseViewController.swift in Sources */,
+				E1DC14982BF74DC40075A175 /* suggestionLocationCell.swift in Sources */,
 				E10BAEA72BE0FBE60088EAAC /* RootViewController.swift in Sources */,
+				E1F0BB132BF5E47E0052818C /* AddressSearchViewController.swift in Sources */,
 				E19F48552BD7A38B00754E38 /* BundleExt.swift in Sources */,
 				E19F48462BD79A9E00754E38 /* UIFontExt.swift in Sources */,
+				E1DC14952BF748D10075A175 /* ZULocationModel.swift in Sources */,
 				E19F48262BD7983B00754E38 /* UIImage.swift in Sources */,
 				E19F48532BD7A38B00754E38 /* UILabelExt.swift in Sources */,
 				E19F48562BD7A38B00754E38 /* AdapterExt.swift in Sources */,

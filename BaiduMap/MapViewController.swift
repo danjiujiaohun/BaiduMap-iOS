@@ -92,7 +92,7 @@ class MapViewController: BaseViewController,
         
         BMKLocationAuth.sharedInstance()?.checkPermision(withKey: appKey, authDelegate: self)
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async { [self] in
             // 设置为YES时才能创建BMKSearchBase及其子类对象，否则返回nil，将影响地图SDK所有检索组件功能的使用
             BMKMapManager.setAgreePrivacy(true)
             // 要使用百度地图，请先启动BMKMapManager
@@ -114,6 +114,13 @@ class MapViewController: BaseViewController,
             } else {
                 NSLog("经纬度类型设置失败")
             }
+            
+            search = BMKGeoCodeSearch()
+            search.delegate = self
+            
+            reverseGeoCodeOption = BMKReverseGeoCodeSearchOption()
+            /// 是否访问最新版行政区划数据（仅对中国数据生效
+            reverseGeoCodeOption.isLatestAdmin = true
         }
         
         userLocation = BMKUserLocation()
@@ -146,13 +153,6 @@ class MapViewController: BaseViewController,
         locationManager.reGeocodeTimeout = 10
         ///连续定位是否返回逆地理信息，默认YES。
         locationManager.locatingWithReGeocode = true
-        
-        search = BMKGeoCodeSearch()
-        search.delegate = self
-        
-        reverseGeoCodeOption = BMKReverseGeoCodeSearchOption()
-        /// 是否访问最新版行政区划数据（仅对中国数据生效
-        reverseGeoCodeOption.isLatestAdmin = true
     }
     
     private func initView() {
@@ -196,6 +196,12 @@ class MapViewController: BaseViewController,
         } else {
             startLocation()
         }
+    }
+    
+    /// 地图中心移动到指定位置
+    public func moveToCustomLocation(latitude: Double, longitude: Double) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        mapView.setCenter(location.coordinate, animated: true)
     }
     
     /// 暴露的方法-定位成功

@@ -26,6 +26,10 @@ public enum iconName: String, CaseIterable {
     case location_btn
     /// 中心定位_泡泡
     case map_center_paopao
+    /// 向右箭头
+    case arrow_icon
+    /// 交换箭头
+    case exchange_icon
     
     func getName() -> String {
         "image_" + rawValue
