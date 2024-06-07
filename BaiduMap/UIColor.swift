@@ -40,4 +40,7 @@ public enum ColorName:String,CaseIterable {
     
     ///  0xFF8100
     case color_FF8100
+    
+    ///  0xF76400
+    case color_F76400
 }

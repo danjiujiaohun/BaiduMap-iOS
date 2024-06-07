@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import BaiduMapAPI_Base
+import BaiduMapAPI_Map
+import BaiduMapAPI_Search
+import BaiduMapAPI_Utils
 
 class RootViewController: MapViewController {
     private var searchTopBgView: UIView!
@@ -16,6 +20,9 @@ class RootViewController: MapViewController {
     private var naviStartTextField: UITextField!
     private var naviEndTextField: UITextField!
     private var exchangeButton: UIButton!
+    
+    private var naviTimeBgView: UIView!
+    private var naviTimeDescriptionLabel: UILabel!
     
     private var bottomBgView: UIView!
     private var locationButton: UIButton!
@@ -72,6 +79,11 @@ class RootViewController: MapViewController {
         exchangeButton.setImage(UIImage.image(.exchange_icon), for: .highlighted)
         exchangeButton.addTarget(self, action: #selector(clickExchangeBtn), for: .touchUpInside)
         
+        naviTimeBgView = UIView(frame: CGRect(x: 0, y: -(Common.safeAreaTop + 48.fit()), width: Common.screenWidth, height: Common.safeAreaTop + 48.fit()))
+        naviTimeBgView.backgroundColor = UIColor.color(.color_FFFFFF)
+        
+        naviTimeDescriptionLabel = UILabel.label("", textColor: UIColor.color(.color_24292B), font: UIFont.font(of: 14.fit(), weight: .regular))
+        
         bottomBgView = UIView(frame: CGRect(x: 0, y: 0, width: Common.screenWidth, height: Common.safeAreaBottom + 32.fit()))
         bottomBgView.backgroundColor = UIColor.color(.color_FFFFFF)
         
@@ -102,6 +114,9 @@ class RootViewController: MapViewController {
         naviTopBgView.addSubview(naviStartTextField)
         naviTopBgView.addSubview(naviEndTextField)
         naviTopBgView.addSubview(exchangeButton)
+        
+        view.addSubview(naviTimeBgView)
+        naviTimeBgView.addSubview(naviTimeDescriptionLabel)
         
         view.addSubview(bottomBgView)
         view.addSubview(locationButton)
@@ -140,6 +155,11 @@ class RootViewController: MapViewController {
             make.right.equalTo(-16.fit())
             make.centerY.equalTo(Common.safeAreaTop + 44.fit())
             make.size.equalTo(CGSize(width: 44.fit(), height: 44.fit()))
+        }
+        
+        naviTimeDescriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(Common.safeAreaTop + 8.fit())
+            make.centerX.equalToSuperview()
         }
         
         bottomBgView.snp.makeConstraints { make in
@@ -317,10 +337,17 @@ class RootViewController: MapViewController {
     @objc
     private func clickLocationButton() {
         moveToUserLocation()
+        reShowCenterAnnotationView()
         mapView.zoomLevel = 17
         
         self.toDownTranslation(targetView: searchTopBgView, y: (Common.safeAreaTop + 48.fit())/2.0)
         self.toUpTranslation(targetView: naviTopBgView, y: -(Common.safeAreaTop + 120.fit())/2.0)
+        self.toUpTranslation(targetView: naviTimeBgView, y: -(Common.safeAreaTop + 48.fit())/2.0)
+        
+        self.navigationButton.removeTarget(self, action: #selector(checkRouteBtn), for: .touchUpInside)
+        self.navigationButton.addTarget(self, action: #selector(clickNavigationBtn), for: .touchUpInside)
+        
+        navigationButton.setTitle("去导航", for: .normal)
     }
     
     @objc
@@ -329,6 +356,35 @@ class RootViewController: MapViewController {
         
         self.toUpTranslation(targetView: searchTopBgView, y: -(Common.safeAreaTop + 48.fit())/2.0)
         self.toDownTranslation(targetView: naviTopBgView, y: (Common.safeAreaTop + 120.fit())/2.0)
+        
+        self.navigationButton.removeTarget(self, action: #selector(clickNavigationBtn), for: .touchUpInside)
+        self.navigationButton.addTarget(self, action: #selector(checkRouteBtn), for: .touchUpInside)
+        navigationButton.setTitle("查看路线", for: .normal)
+    }
+    
+    @objc
+    private func checkRouteBtn() {
+        print("========查看路线")
+        
+        searchDrivingRoute(startLocationName: naviStartTextField.text, endLocationName: naviEndTextField.text)
+        
+        searchPathAction = { distance, time in
+            self.naviTimeDescriptionLabel.text = "距离共\(Double(distance/1000))km，驾车预计\(time)分钟后到达"
+        }
+        
+        self.toUpTranslation(targetView: naviTopBgView, y: -(Common.safeAreaTop + 120.fit())/2.0)
+        self.toDownTranslation(targetView: naviTimeBgView, y: (Common.safeAreaTop + 48.fit())/2.0)
+        
+        self.navigationButton.removeTarget(self, action: #selector(checkRouteBtn), for: .touchUpInside)
+        self.navigationButton.addTarget(self, action: #selector(startNavigation), for: .touchUpInside)
+        navigationButton.setTitle("开始导航", for: .normal)
+    }
+    
+    @objc
+    private func startNavigation() {
+        print("========开始导航")
+        
+        
     }
     
     @objc
@@ -350,6 +406,10 @@ class RootViewController: MapViewController {
     @objc
     private func clickExchangeBtn() {
         print("=====交换导航始末位置")
+        
+        let startLocation = naviStartTextField.text
+        naviStartTextField.text = naviEndTextField.text
+        naviEndTextField.text = startLocation
     }
 }
 

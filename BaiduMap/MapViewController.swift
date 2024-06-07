@@ -10,13 +10,15 @@ import BaiduMapAPI_Map
 import BaiduMapAPI_Search
 import BaiduMapAPI_Utils
 import BMKLocationKit
+import BaiduMapAPI_Base
 
 class MapViewController: BaseViewController,
                           BMKMapViewDelegate,
                           BMKLocationAuthDelegate,
                           BMKGeneralDelegate,
                           BMKLocationManagerDelegate,
-                          BMKGeoCodeSearchDelegate {
+                          BMKGeoCodeSearchDelegate,
+                          BMKRouteSearchDelegate {
     private(set) var mapView: BMKMapView!
     
     /// BMKUserLocation实例
@@ -37,17 +39,32 @@ class MapViewController: BaseViewController,
     /// 中心点标识
     private var centerAnnotationViewIdentifier = "com.map.center.annotation"
     
+    /// 路线搜索BMKRouteSearch实例
+    private var routeSearch: BMKRouteSearch!
+    
     /// 当前用户定位的经度
     var currentUserLongitude: Double?
     
     /// 当前用户定位的纬度
     var currentUserLatitude: Double?
     
+    /// 当前用户定位地点名称
+    var currentUserLocationName: String?
+    
+    /// 当前用户定位地点uid
+    var currentUserLocationUid: String?
+    
     /// 当前的中心经度
     var currentLongitude: Double?
     
     /// 当前的中心纬度
     var currentLatitude: Double?
+    
+    /// 当前中心地点名称
+    var currentLocationName: String?
+    
+    /// 当前中心地点Uid
+    var currentLocationUid: String?
     
     /// 城市名称
     var cityName: String?
@@ -62,6 +79,14 @@ class MapViewController: BaseViewController,
     
     // 当前定位的poiName
     var poiName = ""
+    
+    // 当前定位的uid
+    var poiUid = ""
+    
+    //地图下方的不可见BottomOffset 用于调整地图居中位置
+    public var bottomOffset:CGFloat = 50
+    
+    public var searchPathAction:((Int32,Int32) -> Void)?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -79,12 +104,18 @@ class MapViewController: BaseViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        requestLocationAuthorization()
         configurationBMK()
         initView()
         createCenterAnnotation()
         
         locationManager.startUpdatingHeading()
         locationManager.startUpdatingLocation()
+    }
+    
+    private func requestLocationAuthorization() {
+        let locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
     }
     
     private func configurationBMK() {
@@ -121,6 +152,9 @@ class MapViewController: BaseViewController,
             reverseGeoCodeOption = BMKReverseGeoCodeSearchOption()
             /// 是否访问最新版行政区划数据（仅对中国数据生效
             reverseGeoCodeOption.isLatestAdmin = true
+            
+            routeSearch = BMKRouteSearch()
+            routeSearch.delegate = self
         }
         
         userLocation = BMKUserLocation()
@@ -193,6 +227,7 @@ class MapViewController: BaseViewController,
     public func moveToUserLocation(){
         if userLocation.location != nil{
             mapView.setCenter(userLocation.location.coordinate, animated: true)
+            
         } else {
             startLocation()
         }
@@ -202,6 +237,18 @@ class MapViewController: BaseViewController,
     public func moveToCustomLocation(latitude: Double, longitude: Double) {
         let location = CLLocation(latitude: latitude, longitude: longitude)
         mapView.setCenter(location.coordinate, animated: true)
+    }
+    
+    /// 地图中心移出地图路线，展示中心标注
+    public func reShowCenterAnnotationView() {
+        mapView.removeOverlays(mapView.overlays ?? [BMKOverlay]())
+        
+        annotation.isLockedToScreen = true
+        annotation.screenPointToLock = CGPoint(x: view.frame.width/2, y: (view.frame.height-Common.safeAreaBottom)/2)
+        
+        if let annotation = annotation {
+            mapView.addAnnotation(annotation)
+        }
     }
     
     /// 暴露的方法-定位成功
@@ -223,6 +270,18 @@ class MapViewController: BaseViewController,
     /// 暴露方法-逆地理编码成功
     func getReverseGeoResultSuccess() {
         
+    }
+    
+    /// 暴露方法-搜索驾车路线
+    func searchDrivingRoute(startLocationName: String?, endLocationName: String?) {
+        print("导航起始地：\(startLocationName)")
+        print("导航目的地：\(endLocationName)")
+        if endLocationName == currentLocationName {
+            searchPath(cityName: "杭州市", isExchangeEndLocation: false)
+            
+        } else if startLocationName == currentLocationName {
+            searchPath(cityName: "杭州市", isExchangeEndLocation: true)
+        }
     }
     
     // MARK: - BMKLocationManagerDelegate
@@ -265,6 +324,8 @@ class MapViewController: BaseViewController,
             cityName = city
             cityCode = adCode
             
+            currentUserLocationName = pt.name
+            currentUserLocationUid = pt.uid
             locationName = pt.name
             locationAddress = pt.addr
             
@@ -323,8 +384,23 @@ class MapViewController: BaseViewController,
         }
     }
     
-    // MARK: - BMKGeoCodeSearchDelegate
+    /// 画出导航路径
+    func mapView(_ mapView: BMKMapView, viewFor overlay: BMKOverlay) -> BMKOverlayView? {
+        if overlay.isKind(of: BMKPolyline.self) {
+            //初始化一个overlay并返回相应的BMKPolylineView的实例
+            let polylineView = BMKPolylineView(overlay: overlay)
+            //设置polylineView的画笔（边框）颜色
+            polylineView?.strokeColor = UIColor.color(.color_F76400).withAlphaComponent(0.6)
+            //设置polylineView的线宽度
+            polylineView?.lineWidth = 4.0
+            polylineView?.lineJoinType = kBMKLineJoinBerzier
+            
+            return polylineView
+        }
+        return nil
+    }
     
+    // MARK: - BMKGeoCodeSearchDelegate
     func onGetReverseGeoCodeResult(_ searcher: BMKGeoCodeSearch!, result: BMKReverseGeoCodeSearchResult!, errorCode error: BMKSearchErrorCode) {
         if error == BMK_SEARCH_NO_ERROR {
             print("=======")
@@ -337,13 +413,18 @@ class MapViewController: BaseViewController,
             
             if let region = result.poiRegions.first {
                 poiName = region.regionName
+                poiUid = region.regionUID
                 
             } else if var list = result.poiList {
                 list.sort { item1, item2 in
                     return item1.distance < item2.distance
                 }
                 poiName = list.first?.name ?? ""
+                poiUid = list.first?.uid ?? ""
             }
+            
+            currentLocationName = poiName
+            currentLocationUid = poiUid
             
             locationName = poiName
             locationAddress = result.address
@@ -353,5 +434,163 @@ class MapViewController: BaseViewController,
         } else {
             print("=======检索失败")
         }
+    }
+    
+    //MARK: - BMKRouteSearchDelegate
+    func searchPath(cityName: String, isExchangeEndLocation: Bool) {
+        /*
+         线路检索节点信息类，一个路线检索节点可以通过经纬度坐标或城市名加地名确定
+         实例化线路检索节点信息类对象
+         */
+        let start = BMKPlanNode()
+        // 起点名称
+        start.name = currentUserLocationName
+        // 导航地址暂定都为杭州市，后续进行迭代更改 注：cityName和cityID同时指定时，优先使用cityID
+        start.cityName = "杭州市"
+        // 起点经纬度
+        start.pt = CLLocationCoordinate2D(latitude: currentUserLatitude ?? 0.0, longitude: currentUserLongitude ?? 0.0)
+        
+        //实例化线路检索节点信息类对象
+        let end = BMKPlanNode()
+        //终点名称
+        end.name = currentLocationName
+        //终点所在城市，注：cityName和cityID同时指定时，优先使用cityID
+        end.cityName = "杭州市"
+        //终点经纬度
+        end.pt = CLLocationCoordinate2D(latitude: currentLatitude ?? 0.0, longitude: currentLongitude ?? 0.0)
+        
+        
+        //初始化请求参数类BMKDrivingRoutePlanOption的实例
+        let drivingRoutePlanOption = BMKDrivingRoutePlanOption()
+        if !isExchangeEndLocation {
+            //检索的起点，可通过关键字、坐标两种方式指定。cityName和cityID同时指定时，优先使用cityID
+            drivingRoutePlanOption.from = start
+            //检索的终点，可通过关键字、坐标两种方式指定。cityName和cityID同时指定时，优先使用cityID
+            drivingRoutePlanOption.to = end
+            
+        } else {
+            //检索的起点，可通过关键字、坐标两种方式指定。cityName和cityID同时指定时，优先使用cityID
+            drivingRoutePlanOption.from = end
+            //检索的终点，可通过关键字、坐标两种方式指定。cityName和cityID同时指定时，优先使用cityID
+            drivingRoutePlanOption.to = start
+        }
+        
+        /**
+         发起驾乘路线检索请求，异步函数，返回结果在BMKRouteSearchDelegate的onGetDrivingRouteResult中
+         */
+        let flag = routeSearch.drivingSearch(drivingRoutePlanOption)
+        if flag {
+            print("=====驾车检索成功")
+            
+        } else {
+            print("=====驾车检索失败")
+        }
+    }
+    
+    func onGetDrivingRouteResult(_ searcher: BMKRouteSearch!, result: BMKDrivingRouteResult!, errorCode error: BMKSearchErrorCode) {
+        if error == BMK_SEARCH_NO_ERROR {
+            /// 成功获取结果
+            // 清除之前的标记和规划的路径
+            mapView.removeAnnotations(mapView.annotations ?? [BMKAnnotation]())
+            
+            var pointCount = 0
+            // 获取所有驾车路线中的第一条路线
+            var routeline = BMKDrivingRouteLine()
+            if result.routes.count > 0 {
+                routeline = result.routes[0]
+            }
+            
+            // 遍历驾车路线中的所有路段
+            for(_, item) in routeline.steps.enumerated() {
+                //获取驾车路线中的每条路段
+                let step: BMKDrivingStep = item as! BMKDrivingStep
+                //初始化标注类BMKPointAnnotation的实例
+                let annotation = BMKPointAnnotation()
+                //设置标注的经纬度坐标为子路段的入口经纬度
+                annotation.coordinate = step.entrace.location
+                //设置标注的标题为子路段的说明
+                annotation.title = step.entraceInstruction
+                /**
+                 
+                 当前地图添加标注，需要实现BMKMapViewDelegate的-mapView:viewForAnnotation:方法
+                 来生成标注对应的View
+                 @param annotation 要添加的标注
+                 */
+//                mapView.addAnnotation(annotation)
+                //统计路段所经过的地理坐标集合内点的个数
+                pointCount += Int(step.pointsCount)
+            }
+            //+polylineWithPoints: count:指定的直角坐标点数组
+            var points = [BMKMapPoint](repeating: BMKMapPoint(x: 0, y: 0), count: pointCount)
+            var count = 0
+             //遍历驾车路线中的所有路段
+            for(_, item) in routeline.steps.enumerated() {
+                //获取驾车路线中的每条路段
+                let step: BMKDrivingStep = item as! BMKDrivingStep
+                //遍历每条路段所经过的地理坐标集合点
+                for index in 0..<Int(step.pointsCount) {
+                    //将每条路段所经过的地理坐标点赋值给points
+                    points[count].x = step.points[index].x
+                    points[count].y = step.points[index].y
+                    count += 1
+                }
+            }
+            
+            drawLine(routeLine: routeline, points: &points)
+                
+        } else {
+            /// 检索失败
+            print(result.description)
+        }
+    }
+    
+    //在地图上划出路径(等待两条路径规划完成后，一起画出来)
+    func drawLine(routeLine:BMKDrivingRouteLine,points:inout [BMKMapPoint]){
+        mapView.removeOverlays(mapView.overlays ?? [BMKOverlay]())
+        if let polyline = BMKPolyline(points: &points, count: UInt(points.count)){
+            mapView.add(polyline)
+        }
+        mapViewFitPolyline(points, mapView)
+        
+        searchPathAction?(routeLine.distance,routeLine.duration.minutes)
+    }
+    
+    //根据polyline设置地图范围
+    func mapViewFitPolyline(_ points: [BMKMapPoint], _ mapView: BMKMapView) {
+        var leftTop_x: Double = 0
+        var leftTop_y: Double = 0
+        var rightBottom_x: Double = 0
+        var rightBottom_y: Double = 0
+        if points.count < 1 {
+            return
+        }
+        let pt: BMKMapPoint = points[0]
+        leftTop_x = pt.x
+        leftTop_y = pt.y
+        //左上方的点lefttop坐标（leftTop_x，leftTop_y）
+        rightBottom_x = pt.x
+        rightBottom_y = pt.y
+        
+        for index in 1..<points.count {
+            let point: BMKMapPoint = points[Int(index)]
+            if (point.x < leftTop_x) {
+                leftTop_x = point.x
+            }
+            if (point.x > rightBottom_x) {
+                rightBottom_x = point.x
+            }
+            if (point.y < leftTop_y) {
+                leftTop_y = point.y
+            }
+            if (point.y > rightBottom_y) {
+                rightBottom_y = point.y
+            }
+        }
+        var rect: BMKMapRect = BMKMapRect()
+        rect.origin = BMKMapPointMake(leftTop_x, leftTop_y)
+        rect.size = BMKMapSizeMake(rightBottom_x - leftTop_x, rightBottom_y - leftTop_y)
+//        let padding: UIEdgeInsets = UIEdgeInsets.init(top: 30, left: 30, bottom: bottomOffset + 30, right: 30)
+        let padding: UIEdgeInsets = UIEdgeInsets(top: 40, left: 40, bottom: 40, right: 40)
+        mapView.fitVisibleMapRect(rect, edgePadding: padding, withAnimated: true)
     }
 }

@@ -9,7 +9,18 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>百度地图想要获取定位权限，以便定位当前位置信息</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>百度地图想要获取定位权限，以便定位当前位置信息</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>百度地图想要获取定位权限，以便定位当前位置信息</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>location</string>
+	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>百度导航需要使用照相机功能</string>
 </dict>
 </plist>
