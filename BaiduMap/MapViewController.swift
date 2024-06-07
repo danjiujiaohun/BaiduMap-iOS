@@ -54,6 +54,18 @@ class MapViewController: BaseViewController,
     /// 当前用户定位地点uid
     var currentUserLocationUid: String?
     
+    /// 当前搜索地址目的地的经度
+    var currentEndLongitude: Double?
+    
+    /// 当前搜索地址目的地的纬度
+    var currentEndLatitude: Double?
+    
+    /// 当前搜索地址目的地的名称
+    var currentEndLocationName: String?
+    
+    /// 当前搜索地址目的地的uid
+    var currentEndLocationUid: String?
+    
     /// 当前的中心经度
     var currentLongitude: Double?
     
@@ -458,6 +470,14 @@ class MapViewController: BaseViewController,
         end.cityName = "杭州市"
         //终点经纬度
         end.pt = CLLocationCoordinate2D(latitude: currentLatitude ?? 0.0, longitude: currentLongitude ?? 0.0)
+        
+        // 保存搜索目的地的相关信息
+        // 目的地名称
+        currentEndLocationName = currentLocationName
+        // 目的地经纬度和uid
+        currentEndLatitude = currentLatitude
+        currentEndLongitude = currentLongitude
+        currentEndLocationUid = currentLocationUid
         
         
         //初始化请求参数类BMKDrivingRoutePlanOption的实例

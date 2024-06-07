@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		0514FC52F004317C81F7A98C /* Pods_BaiduMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F53A6E563622DF28D6A96EA9 /* Pods_BaiduMap.framework */; };
 		E10BAEA72BE0FBE60088EAAC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10BAEA62BE0FBE60088EAAC /* RootViewController.swift */; };
+		E1395A032C12EF7700B66E10 /* GuideAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A022C12EF7700B66E10 /* GuideAlertView.swift */; };
+		E1395A052C12EFFE00B66E10 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A042C12EFFE00B66E10 /* UIButtonExt.swift */; };
+		E1395A072C12F79400B66E10 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A062C12F79400B66E10 /* HUD.swift */; };
+		E1395A0A2C12F8C300B66E10 /* ZUActionSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1395A092C12F8C300B66E10 /* ZUActionSheetViewController.xib */; };
+		E1395A122C12F8CA00B66E10 /* ZUAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A0B2C12F8CA00B66E10 /* ZUAlertAction.swift */; };
+		E1395A132C12F8CA00B66E10 /* ZUAlertProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A0C2C12F8CA00B66E10 /* ZUAlertProtocol.swift */; };
+		E1395A142C12F8CA00B66E10 /* ZUAlertBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A0D2C12F8CA00B66E10 /* ZUAlertBundle.swift */; };
+		E1395A152C12F8CA00B66E10 /* ZUAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A0E2C12F8CA00B66E10 /* ZUAlertController.swift */; };
+		E1395A162C12F8CA00B66E10 /* ZUActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A0F2C12F8CA00B66E10 /* ZUActionSheetViewController.swift */; };
+		E1395A172C12F8CA00B66E10 /* ZUActionSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A102C12F8CA00B66E10 /* ZUActionSheetPresentationController.swift */; };
+		E1395A182C12F8CA00B66E10 /* ZUContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1395A112C12F8CA00B66E10 /* ZUContentViewController.swift */; };
 		E19F48262BD7983B00754E38 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F48242BD7983B00754E38 /* UIImage.swift */; };
 		E19F48272BD7983B00754E38 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F48252BD7983B00754E38 /* UIColor.swift */; };
 		E19F48442BD79A8100754E38 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F48432BD79A8100754E38 /* BaseViewController.swift */; };
@@ -32,6 +43,17 @@
 		606402E3CCE78046CB1A7BE6 /* Pods-BaiduMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduMap.release.xcconfig"; path = "Target Support Files/Pods-BaiduMap/Pods-BaiduMap.release.xcconfig"; sourceTree = "<group>"; };
 		711B71156F7B1E321FBAAB28 /* Pods-BaiduMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduMap.debug.xcconfig"; path = "Target Support Files/Pods-BaiduMap/Pods-BaiduMap.debug.xcconfig"; sourceTree = "<group>"; };
 		E10BAEA62BE0FBE60088EAAC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		E1395A022C12EF7700B66E10 /* GuideAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAlertView.swift; sourceTree = "<group>"; };
+		E1395A042C12EFFE00B66E10 /* UIButtonExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
+		E1395A062C12F79400B66E10 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		E1395A092C12F8C300B66E10 /* ZUActionSheetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZUActionSheetViewController.xib; sourceTree = "<group>"; };
+		E1395A0B2C12F8CA00B66E10 /* ZUAlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUAlertAction.swift; sourceTree = "<group>"; };
+		E1395A0C2C12F8CA00B66E10 /* ZUAlertProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUAlertProtocol.swift; sourceTree = "<group>"; };
+		E1395A0D2C12F8CA00B66E10 /* ZUAlertBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUAlertBundle.swift; sourceTree = "<group>"; };
+		E1395A0E2C12F8CA00B66E10 /* ZUAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUAlertController.swift; sourceTree = "<group>"; };
+		E1395A0F2C12F8CA00B66E10 /* ZUActionSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUActionSheetViewController.swift; sourceTree = "<group>"; };
+		E1395A102C12F8CA00B66E10 /* ZUActionSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUActionSheetPresentationController.swift; sourceTree = "<group>"; };
+		E1395A112C12F8CA00B66E10 /* ZUContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZUContentViewController.swift; sourceTree = "<group>"; };
 		E19F48242BD7983B00754E38 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		E19F48252BD7983B00754E38 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		E19F48432BD79A8100754E38 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +105,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E1395A082C12F8AA00B66E10 /* AlertFunc */ = {
+			isa = PBXGroup;
+			children = (
+				E1395A092C12F8C300B66E10 /* ZUActionSheetViewController.xib */,
+				E1395A102C12F8CA00B66E10 /* ZUActionSheetPresentationController.swift */,
+				E1395A0F2C12F8CA00B66E10 /* ZUActionSheetViewController.swift */,
+				E1395A0B2C12F8CA00B66E10 /* ZUAlertAction.swift */,
+				E1395A0D2C12F8CA00B66E10 /* ZUAlertBundle.swift */,
+				E1395A0E2C12F8CA00B66E10 /* ZUAlertController.swift */,
+				E1395A0C2C12F8CA00B66E10 /* ZUAlertProtocol.swift */,
+				E1395A112C12F8CA00B66E10 /* ZUContentViewController.swift */,
+			);
+			path = AlertFunc;
+			sourceTree = "<group>";
+		};
 		E19F48422BD79A6100754E38 /* BaseUnit */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +129,8 @@
 				E19F48512BD7A38B00754E38 /* BundleExt.swift */,
 				E19F48502BD7A38B00754E38 /* Common.swift */,
 				E19F484F2BD7A38B00754E38 /* UILabelExt.swift */,
+				E1395A042C12EFFE00B66E10 /* UIButtonExt.swift */,
+				E1395A062C12F79400B66E10 /* HUD.swift */,
 			);
 			path = BaseUnit;
 			sourceTree = "<group>";
@@ -101,6 +140,7 @@
 			children = (
 				E1C775EB2BEA041300C9919D /* MapCenterAnnotationView.swift */,
 				E1DC14972BF74DC40075A175 /* suggestionLocationCell.swift */,
+				E1395A022C12EF7700B66E10 /* GuideAlertView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,6 +173,7 @@
 				E19F485B2BD7A6E800754E38 /* MapViewController.swift */,
 				E1F0BB122BF5E47E0052818C /* AddressSearchViewController.swift */,
 				E1DC14942BF748D10075A175 /* ZULocationModel.swift */,
+				E1395A082C12F8AA00B66E10 /* AlertFunc */,
 				E1DC14962BF74D820075A175 /* Views */,
 				E19F48422BD79A6100754E38 /* BaseUnit */,
 				E1E95FD82BD794BB00CEE618 /* Main.storyboard */,
@@ -205,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E95FDF2BD794BD00CEE618 /* LaunchScreen.storyboard in Resources */,
+				E1395A0A2C12F8C300B66E10 /* ZUActionSheetViewController.xib in Resources */,
 				E1E95FDC2BD794BD00CEE618 /* Assets.xcassets in Resources */,
 				E1E95FDA2BD794BB00CEE618 /* Main.storyboard in Resources */,
 			);
@@ -276,19 +318,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1395A122C12F8CA00B66E10 /* ZUAlertAction.swift in Sources */,
+				E1395A032C12EF7700B66E10 /* GuideAlertView.swift in Sources */,
 				E19F485C2BD7A6E800754E38 /* MapViewController.swift in Sources */,
 				E19F48542BD7A38B00754E38 /* Common.swift in Sources */,
 				E19F48442BD79A8100754E38 /* BaseViewController.swift in Sources */,
+				E1395A162C12F8CA00B66E10 /* ZUActionSheetViewController.swift in Sources */,
+				E1395A152C12F8CA00B66E10 /* ZUAlertController.swift in Sources */,
 				E1DC14982BF74DC40075A175 /* suggestionLocationCell.swift in Sources */,
 				E10BAEA72BE0FBE60088EAAC /* RootViewController.swift in Sources */,
 				E1F0BB132BF5E47E0052818C /* AddressSearchViewController.swift in Sources */,
+				E1395A172C12F8CA00B66E10 /* ZUActionSheetPresentationController.swift in Sources */,
 				E19F48552BD7A38B00754E38 /* BundleExt.swift in Sources */,
+				E1395A182C12F8CA00B66E10 /* ZUContentViewController.swift in Sources */,
 				E19F48462BD79A9E00754E38 /* UIFontExt.swift in Sources */,
 				E1DC14952BF748D10075A175 /* ZULocationModel.swift in Sources */,
 				E19F48262BD7983B00754E38 /* UIImage.swift in Sources */,
 				E19F48532BD7A38B00754E38 /* UILabelExt.swift in Sources */,
+				E1395A132C12F8CA00B66E10 /* ZUAlertProtocol.swift in Sources */,
 				E19F48562BD7A38B00754E38 /* AdapterExt.swift in Sources */,
+				E1395A142C12F8CA00B66E10 /* ZUAlertBundle.swift in Sources */,
 				E1C775EC2BEA041300C9919D /* MapCenterAnnotationView.swift in Sources */,
+				E1395A052C12EFFE00B66E10 /* UIButtonExt.swift in Sources */,
+				E1395A072C12F79400B66E10 /* HUD.swift in Sources */,
 				E1E95FD32BD794BB00CEE618 /* AppDelegate.swift in Sources */,
 				E19F48272BD7983B00754E38 /* UIColor.swift in Sources */,
 			);

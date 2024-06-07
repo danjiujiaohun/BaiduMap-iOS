@@ -22,5 +22,10 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>百度导航需要使用照相机功能</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>baidumap</string>
+		<string>iosamap</string>
+	</array>
 </dict>
 </plist>

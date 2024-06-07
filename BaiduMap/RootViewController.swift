@@ -384,7 +384,31 @@ class RootViewController: MapViewController {
     private func startNavigation() {
         print("========开始导航")
         
-        
+        if let locationLng = currentEndLongitude, let locationLat = currentEndLatitude, let locationAddress = currentEndLocationName {
+            /// 百度使用的是bd09Coord坐标系，导航时需装换为gcj02Coord
+            let bd09Coord = CLLocationCoordinate2DMake(locationLat, locationLng)
+            let gcj02Coord = BMKCoordTrans(bd09Coord, BMK_COORD_TYPE.COORDTYPE_BD09LL, BMK_COORD_TYPE.COORDTYPE_COMMON)
+            
+            let alertView = GuideAlertView(frame: CGRect(x: 0, y: 0, width: Common.screenWidth, height: 202.fit()+Common.safeAreaBottom), latitude: gcj02Coord.latitude, longitude: gcj02Coord.longitude, address: locationAddress)
+            let alert = ZUAlert(contentView: alertView, preferredContentSize: CGSize(width: Common.screenWidth, height: 202.fit()+Common.safeAreaBottom), actions: [])
+
+            let alertController = ZUAlertController.actionSheetViewController(alert: alert)
+            alertController.view.backgroundColor = .clear
+
+            alertView.gaodeMapButtonAciton = {
+                alertController.dismiss(animated: true)
+            }
+            
+            alertView.baiduMapButtonAciton = {
+                alertController.dismiss(animated: true)
+            }
+            
+            alertView.cancelButtonAciton = {
+                alertController.dismiss(animated: true)
+            }
+            
+            self.present(alertController, animated: true)
+        }
     }
     
     @objc
