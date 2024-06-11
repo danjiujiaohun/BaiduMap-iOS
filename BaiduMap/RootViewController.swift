@@ -78,6 +78,7 @@ class RootViewController: MapViewController {
         exchangeButton.setImage(UIImage.image(.exchange_icon), for: .normal)
         exchangeButton.setImage(UIImage.image(.exchange_icon), for: .highlighted)
         exchangeButton.addTarget(self, action: #selector(clickExchangeBtn), for: .touchUpInside)
+        exchangeButton.isHidden = true
         
         naviTimeBgView = UIView(frame: CGRect(x: 0, y: -(Common.safeAreaTop + 48.fit()), width: Common.screenWidth, height: Common.safeAreaTop + 48.fit()))
         naviTimeBgView.backgroundColor = UIColor.color(.color_FFFFFF)
@@ -416,8 +417,12 @@ class RootViewController: MapViewController {
         let vc = AddressSearchViewController()
         vc.transferSelectionLocation = { [self] locationModel in
             if let name = locationModel.name, let l = locationModel.location {
+                currentLongitude = l.longitude
+                currentLatitude = l.latitude
+                currentLocationName = name
                 moveToCustomLocation(latitude: l.latitude, longitude: l.longitude)
                 updateCurrentLocation(currentLocationText: name)
+                naviEndTextField.text = name
                 isShowNavigationButton()
             }
         }
