@@ -13,7 +13,7 @@
 主界面：
 全屏展示地图页面，获取当前个人定位信息
 也拖动地图获取标签所指处地址信息
-<img width='33%' src="https://github.com/danjiujiaohun/BaiduMap-iOS/assets/93069253/60c1b876-bc91-40a9-a81d-7b980b807936" style='width:33%;height:450px;float:left;'>
+<img width='33%' src="https://github.com/danjiujiaohun/BaiduMap-iOS/assets/93069253/60c1b876-bc91-40a9-a81d-7b980b807936" style='width:33%;height:33%;'>
 
 搜索目的地地址，点击即可返回地图页面，并且移动到该地址位置
 ![wecom-temp-204226-b758a5b89d7b2ef21a19e8174de8313f](https://github.com/danjiujiaohun/BaiduMap-iOS/assets/93069253/94270f6f-526d-441e-a2c6-60e1dd69313f)
