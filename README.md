@@ -35,3 +35,5 @@
 查看路线后，查看车辆导航路线信息，点击右下角开始导航则跳转到百度/高德地图进行导航
 
 <img width='20%' src="https://github.com/danjiujiaohun/BaiduMap-iOS/assets/93069253/049f19e4-caa7-49bf-b849-062ac3f94936" style='width:20%;height:20%;float:left;'>
+
+ps：暂时只支持杭州市内路线规划，后期将更新优化
